@@ -1,0 +1,97 @@
+# LiteLLM 主配置
+# 模型别名池：5个别名，支持 cost-based routing
+# API Key 通过 .env 注入，格式 os.environ/VAR_NAME
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: sqlite:///home/sunzc/.litellm/litellm.db
+  max_budget: 0
+  budget_duration: 1d
+
+litellm_settings:
+  routing_strategy: cost-based-routing
+  num_retries: 2
+  request_timeout: 60
+  allowed_fails: 3
+  cooldown_timeout: 60
+
+model_list:
+  # ========================================================
+  # smart — 日常对话 / 推理（按成本优先级，最便宜排最前）
+  # ========================================================
+  - model_name: smart
+    litellm_params:
+      model: openrouter/google/gemma-4-26b-a4b-it:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 30
+  - model_name: smart
+    litellm_params:
+      model: openrouter/deepseek/deepseek-v4-flash:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 30
+  - model_name: smart
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+      rpm: 30
+  - model_name: smart
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: os.environ/DEEPSEEK_API_KEY
+      rpm: 30
+  - model_name: smart
+    litellm_params:
+      model: openrouter/meta-llama/llama-4-maverick-17b-128e-instruct:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 30
+
+  # ========================================================
+  # fast — 快速响应
+  # ========================================================
+  - model_name: fast
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+      rpm: 30
+  - model_name: fast
+    litellm_params:
+      model: groq/qwen-2.5-32b
+      api_key: os.environ/GROQ_API_KEY
+      rpm: 30
+  - model_name: fast
+    litellm_params:
+      model: openrouter/google/gemma-4-26b-a4b-it:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 30
+
+  # ========================================================
+  # vision — 图片理解
+  # ========================================================
+  - model_name: vision
+    litellm_params:
+      model: zhipu/glm-4v-flash
+      api_key: os.environ/ZHIPU_API_KEY
+      rpm: 30
+  - model_name: vision
+    litellm_params:
+      model: openrouter/google/gemma-4-26b-a4b-it:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 30
+
+  # ========================================================
+  # local — 本地 Ollama（轻量）
+  # ========================================================
+  - model_name: local
+    litellm_params:
+      model: ollama/qwen2.5:1.5b
+      api_base: http://localhost:11434
+      rpm: 9999   # 本地不限
+
+  # ========================================================
+  # coder — 编程专用
+  # ========================================================
+  - model_name: coder
+    litellm_params:
+      model: openrouter/deepseek/deepseek-v4-flash:free
+      api_key: os.environ/OPENROUTER_API_KEY
+      rpm: 30

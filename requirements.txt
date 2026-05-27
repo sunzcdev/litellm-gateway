@@ -1,0 +1,2 @@
+litellm[proxy]   # LiteLLM 网关核心（含代理功能）
+requests         # HTTP 客户端，用于集成测试与健康检查

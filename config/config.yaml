@@ -4,7 +4,7 @@
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
-  database_url: sqlite:///home/sunzc/.litellm/litellm.db
+  # config-only 模式：不指定 database_url，纯内存运行
   max_budget: 0
   budget_duration: 1d
 
@@ -39,11 +39,11 @@ model_list:
       model: deepseek/deepseek-chat
       api_key: os.environ/DEEPSEEK_API_KEY
       rpm: 30
-  - model_name: smart
-    litellm_params:
-      model: openrouter/meta-llama/llama-4-maverick-17b-128e-instruct:free
-      api_key: os.environ/OPENROUTER_API_KEY
-      rpm: 30
+  # - model_name: smart                  # 暂时注释，这条模型名不可用
+  #   litellm_params:
+  #     model: openrouter/meta-llama/llama-4-maverick-17b-128e-instruct:free
+  #     api_key: os.environ/OPENROUTER_API_KEY
+  #     rpm: 30
 
   # ========================================================
   # fast — 快速响应
